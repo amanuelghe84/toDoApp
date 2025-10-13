@@ -7,10 +7,10 @@
     - reporting activities
  - scope of the app?  
 
-A Todo App is a simple tak management application that helps users organize
+A Todo App is a simple task management application that helps managers and admins organize
 and track their daily activities. It demonstrates key concepts like CRUD
 (create, read, update and delete) operations, user authentication and
-database management. Users can create, edit and complete tasks while managing
+database management. They can create, edit and complete tasks while managing
 personal or team projects. This App showcases essential development skills such 
 as business, audit and reporting activities.
 
@@ -26,16 +26,13 @@ ENTITIES:
 MODEL:
  - USERS [WITH ROLES]
   - ID: [id] Unique identifier for each user
-  - USERNAME: [username] Full name of the user
+  - FULL_NAME: [fullName] Full name of the user
   - EMAIL: [email] User's email address
   - PASSWORD: [password] User password
   - BIO: [bio] User's biography
   - CREATED_AT: [created_at] Account creation timestamp
   - UPDATED_AT: [updated_at] Account Last modification timestamp
   - IS_ACTIVE: [is_active] Is the user active or not
-
-
-
   - ROLES: [role] [USER, MANAGER, ADMIN]
     - USER
     - MANAGER
@@ -45,7 +42,7 @@ MODEL:
    - PROJECT_ID: [project_id] References the project the task belongs to
    - TITLE: [title] name of the task
    - DESCRIPTION: [description] Detailed explanation of the Task
-   - STATUS: [status] Task status (e.g. Pending, in progress or completed)
+   - STATUS: [status] Task status (e.g. Pending,  or completed)
    - IS_COMPLETED: [is_completed] References the Task completed or not
  - PROJECT
    - ID: [id] Unique project identifier
