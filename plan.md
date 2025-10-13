@@ -7,9 +7,9 @@
     - reporting activities
  - scope of the app?  
 
-A Todo App is a simple task management application that helps managers and admins organize
-and track their daily activities. It demonstrates key concepts like CRUD
-(create, read, update and delete) operations, user authentication and
+A Todo App is a simple task management application that helps managers or
+admins organize and track their daily activities. It demonstrates key concepts
+like CRUD (create, read, update and delete) operations, user authentication and
 database management. They can create, edit and complete tasks while managing
 personal or team projects. This App showcases essential development skills such 
 as business, audit and reporting activities.
@@ -42,33 +42,44 @@ ENTITIES:
 
 MODEL:
  - USERS [WITH ROLES]
-  - ID: [id] Unique identifier for each user
-  - FULL_NAME: [fullName] Full name of the user
-  - EMAIL: [email] User's email address
-  - PASSWORD: [password] User password
-  - BIO: [bio] User's biography
-  - CREATED_AT: [created_at] Account creation timestamp
-  - UPDATED_AT: [updated_at] Account Last modification timestamp
-  - IS_ACTIVE: [is_active] Is the user active or not
-  - ROLES: [role] [USER, MANAGER, ADMIN]
+  - ID: [id]
+  - FULL_NAME: [fullName]
+  - EMAIL: [email]
+  - PASSWORD: [password] 
+  - ROLES: [role:ENUM]
     - USER
     - MANAGER
     - ADMIN
+  - CREATED_AT: [createdAt:datetime]
+  - UPDATED_AT: [updatedAt:datetime]
+  - IS_ACTIVE: [isActive:boolean]
  - TASK
-   - ID: [id] Unique task identifier
-   - PROJECT_ID: [project_id] References the project the task belongs to
-   - TITLE: [title] name of the task
-   - DESCRIPTION: [description] Detailed explanation of the Task
-   - STATUS: [status] Task status (e.g. Pending,  or completed)
-   - IS_COMPLETED: [is_completed] References the Task completed or not
+   - ID: [id]
+   - PROJECT_ID: [projectId:foreignKey]
+   - ASSIGNED_TO: [assigned:foreignKey] 
+   - DESCRIPTION: [description]
+   - STATUS: [status:ENUM]
+     - ASSIGNED
+     - PENDING
+     - COMPLETE
+   - CREATED_AT: [createdAt:datetime]
+   - UPDATED_AT: [updatedAt:datetime]
+   - IS_ACTIVE: [isActive:boolean]
  - PROJECT
-   - ID: [id] Unique project identifier
-   - NAME: [name] Project title
-   - DESCRIPTION: [description] goal of the project
-   - START_DATE: [start_date] Project start date
-   - END_DATE: [end_date] Project end date
-   - MANAGER_ID: [manager_id] References the user managing the project
-   - IS_COMPLETED: [is_completed] References the Project completed or not
+   - ID: [id]
+   - NAME: [name]
+   - DESCRIPTION: [description]
+   - OWNER_ID: [ownerId:foreignKey]
+   - CREATED_AT: [createdAt:datetime]
+   - UPDATED_AT: [updatedAt:datetime] 
+   - IS_ACTIVE: [isActive:boolean]
+ - AUDIT
+  - ID: [id]
+  - ACTOR: [actor:foreignKey]
+  - ACTION: [action:general_activity]
+  - DETAIL: [detail:sub_activity]
+  - CREATED_AT: [createdAt:datetime]
+  - UPDATED_AT: [updatedAt:datetime]
 
 RELATIONS:
 - PROJECTS [MANY-ONE] MANAGER 
@@ -104,8 +115,40 @@ API GROUPS:
       - ADMIN [ALL]
       - MANAGER  [ALL]
       - USER [ALL]
-- etc .....
+
+- TASK [/task]
+   - CREATE [POST] [/tasks]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]
+   - UPDATE [PUT/PATCH] [/tasks<id>]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]
+   - DELETE [DELETE] [/tasks<id>]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]  
+   - READ [GET] [/tasks<id>]
+      - ADMIN [ALL]
+      - MANAGER  [ALL]
+      - USER [ALL]
+- AUDIT [/audit]
+   - CREATE [POST] [/audits]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]
+   - UPDATE [PUT/PATCH] [/audits<id>]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]
+   - DELETE [DELETE] [/audits<id>]
+      - ADMIN [ FOR ALL]
+      - MANAGER  [ OWN PROJECTS]  
+   - READ [GET] [/audits<id>]
+      - ADMIN [ALL]
+      - MANAGER  [ALL]
+      - USER [ALL]
   
+- BACKGROUND TASKS
+  - Audit background tasks
+
+
 - SCHEMAS [RESPONSE AND REQUEST]
   
   - USER [/user]
@@ -230,13 +273,29 @@ API GROUPS:
        -  success                            
 
 - REPOSITORIES:
-   ....coming soon..........
+   - USERS [CLASS]
+     -
+     -  
+   - PROJECTS [CLASS]
+     -
+     -  
+   - TASKS [CLASS]
+     -
+     -  
+   - AUDIT [CLASS]
+     -
+     -  
 
 - SERVICES:
-   ....coming soon..........
+   - ORM SERVICE [super class]
+     -  USER [sub class]
+     -  projects [sub class]
+     - etc ...
+     -  
 
 - DEPENDENCIES:
-   ....coming soon..........
+  - AUTHENTICATION
+  - AUTHORIZATION
 
 - TESTS:
   - INTEGRATION
