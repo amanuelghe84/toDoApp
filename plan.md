@@ -8,7 +8,7 @@
  - scope of the app?  
 
 A Todo App is a simple task management application that helps managers or
-admins organize and track their daily activities. It demonstrates key concepts
+admins to organize and to track their daily activities. It demonstrates key concepts
 like CRUD (create, read, update and delete) operations, user authentication and
 database management. They can create, edit and complete tasks while managing
 personal or team projects. This App showcases essential development skills such 
