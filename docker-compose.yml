@@ -17,13 +17,42 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-mongo:
-  # fill in
+  mongo:
+    image: mongo:6        
+    restart: unless-stopped
+    env_file: .env         
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d:ro
+    secrets:
+      - mongo_root_password
+      - mongo_root_username
 
-redis:
-  # fill in
+  redis:
+    image: redis:7         
+    restart: unless-stopped
+    env_file: .env
+    command: ["redis-server", "--requirepass", "$$REDIS_PASSWORD"]  
+    ports:
+      - "6379:6379"
+    secrets:
+      - redis_password
 
 volumes:
   mongo-data:
   redis-data:
   app-logs:
+
+secrets:
+  mongo_root_password:
+    file: ./mongo_root_password.txt
+  mongo_root_username:
+    file: ./mongo_root_username.txt
+  redis_password:
+    file: ./redis_password.txt
