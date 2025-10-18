@@ -49,10 +49,3 @@ volumes:
   redis-data:
   app-logs:
 
-secrets:
-  mongo_root_password:
-    file: ./mongo_root_password.txt
-  mongo_root_username:
-    file: ./mongo_root_username.txt
-  redis_password:
-    file: ./redis_password.txt
