@@ -5,7 +5,7 @@ from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Resolve repo root (two levels up from this file: app/core/config.py -> app/ -> repo root)
-ROOT_DIR = Path(_file_).resolve().parents[2]
+ROOT_DIR = Path(__file__).resolve().parents[2]
 ENV_FILE = ROOT_DIR / ".env"
 
 
@@ -18,8 +18,8 @@ class Settings(BaseSettings):
         extra="ignore",
         env_ignore_empty=True,  # Ignore empty environment variables
     )
-.....
+
+
 
 def get_settings()-> Settings:
-    
     settings = get_settings()

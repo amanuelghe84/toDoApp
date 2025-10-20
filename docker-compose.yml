@@ -9,7 +9,7 @@ services:
     ports:
       - "${APP_PORT}:8000"
     volumes:
-      - ./logs:/var/log
+      - ./log:/var/log
     depends_on:
       mongo:
         condition: service_healthy
