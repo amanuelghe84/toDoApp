@@ -10,6 +10,10 @@ ENV_FILE = ROOT_DIR / ".env"
 
 
 class Settings(BaseSettings):
+    app_name: str = "TODO_APP"
+    debug: bool = False
+    app_port: int = 8000
+
     model_config = SettingsConfigDict(
         env_file=str(ENV_FILE)
         if ENV_FILE.exists()
