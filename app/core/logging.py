@@ -3,8 +3,9 @@ import json
 import logging
 import os
 import sys
-
 from io import StringIO
+
+from dotenv import load_dotenv
 
 from app.core.config import settings
 
@@ -20,20 +21,11 @@ class JSONFormatter(logging.Formatter):
         return json.dumps(log_record)
 
 
-logger = logging.getLogger("json_log_app")
-logger.setLevel(logging.DEBUG)
 
-console_handler = logging.StreamHandler()
-json_formatter = JSONFormatter()
-console_handler.setFormatter(json_formatter)
-
-logger.addHandler(console_handler)
-
-logger.info("This is a JSON log app ")
 
 class CSVFormatter(logging.Formatter):
     def _init_(self, fmt: str | None = None, datefmt: str | None = None) -> None:
-        super()._init_(fmt, datefmt)
+        super().__init__(fmt, datefmt)
         self.output = StringIO()
         self.writer = csv.writer(self.output)
 
@@ -49,20 +41,13 @@ class CSVFormatter(logging.Formatter):
         )
         return self.output.getvalue().strip()
 
-logger = logging.getLogger("csv_my_app")
-logger.setLevel(logging.DEBUG)
+LOG_FILE = os.getenv("LOG_FILE", "/var/log/app.log")
 
-csv_file = "logs.csv"
-if not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0:
-    with open(csv_file, "w") as f:
-        f.write("timestamp,level,logger,message\n")
 
-console_handler = logging.StreamHandler()
-csv_formatter_console = CSVFormatter()
-console_handler.setFormatter(csv_formatter_console)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
-
-logger.warning("This is a CSV log app")
-logger.addHandler(file_handler)
+def get_logger() -> None:
+    logging.basicConfig(
+        filename=LOG_FILE,
+        level=logging.INFO,
+        format=JSONFormatter(),
+        handlers=[logging.StreamHandler()]
+    )
