@@ -6,6 +6,8 @@ from io import StringIO
 
 from app.core.config import Settings
 
+settings = Settings()
+
 
 # Custom logging formatters
 class JSONFormatter(logging.Formatter):
@@ -21,7 +23,7 @@ class JSONFormatter(logging.Formatter):
 
 
 class CSVFormatter(logging.Formatter):
-    def _init_(self, fmt: str | None = None, datefmt: str | None = None) -> None:
+    def __init__(self, fmt: str | None = None, datefmt: str | None = None) -> None:
         super().__init__(fmt, datefmt)
         self.output = StringIO()
         self.writer = csv.writer(self.output)
@@ -125,13 +127,13 @@ def get_logger(name: str | None = None) -> logging.Logger:
         logging.root.addHandler(handler)
 
     # Get the requested logger
-    logger = logging.getLogger(name)
+    logger = logging.getLogger(name or __name__)
 
     # Log an initialization message
-    logging.getLogger(_name_).info(
+    logging.getLogger(__name__).info(
         "Logging configured successfully using %s format at %s level.",
         settings.log_format,
         settings.log_level,
-    )
+        )
 
     return logger
