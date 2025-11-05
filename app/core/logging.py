@@ -135,5 +135,5 @@ def get_logger(name: str | None = None) -> logging.Logger:
         settings.log_format,
         settings.log_level,
         )
-
+    
     return logger
