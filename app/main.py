@@ -4,7 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.core.logging import get_logger
+from app.core.logger import get_logger
 
 app = FastAPI(
     title = settings.app_name,
