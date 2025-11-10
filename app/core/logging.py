@@ -28,23 +28,33 @@ class JsonFormatter(logging.Formatter):
         }
         return json.dumps(log_record)
 
+class CSVFormatter(logging.Formatter):
+    def _init_(self, fmt: str | None = None, datefmt: str | None = None) -> None:
+        super()._init_(fmt, datefmt)
+        self.output = StringIO()
+        self.writer = csv.writer(self.output)
 
 
-logger = logging.getLogger("json_Example")
+
+logger = logging.getLogger("LOGGER TEST")
 logger.setLevel(logging.DEBUG)
 
 console_handler = logging.StreamHandler()
-json_formatter = JsonFormatter()
-console_handler.setFormatter(json_formatter)
+text_formatter = JsonFormatter()
+console_handler.setFormatter(text_formatter)
 
-file_handler = logging.FileHandler("app.log")
-file_handler.setFormatter(json_formatter)
+file_handler = logging.FileHandler("/var/log/app.log")
+file_handler.setFormatter(text_formatter)
 
 
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-logging.Logger.info("This is a JSON example")
+logging.getLogger("LOGGER TEST").info(
+    "Logging configured successfully using %s format at %s level. ",
+    settings.log_format,
+    settings.log_level,
+)
 
 
 

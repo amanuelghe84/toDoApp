@@ -18,3 +18,15 @@ class Settings(BaseSettings):
         env_ignore_empty=True, 
     )
 
+settings: Settings | None = None
+
+def get_settings() -> Settings:
+    global settings
+    if settings is None:
+        settings = Settings.model_validate(
+            {}
+        )
+    return settings
+
+
+settings = get_settings()
