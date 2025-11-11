@@ -39,11 +39,14 @@ class CSVFormatter(logging.Formatter):
 logger = logging.getLogger("LOGGER TEST")
 logger.setLevel(logging.DEBUG)
 
+#console handler
 console_handler = logging.StreamHandler()
-text_formatter = JsonFormatter()
+text_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 console_handler.setFormatter(text_formatter)
 
+# file handler
 file_handler = logging.FileHandler("/var/log/app.log")
+text_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(text_formatter)
 
 

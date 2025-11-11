@@ -15,7 +15,7 @@ class Settings(BaseSettings):
         else None,
         case_sensitive=False,
         extra="ignore",
-        env_ignore_empty=True, 
+        env_ignore_empty=True,
     )
 
 settings: Settings | None = None
