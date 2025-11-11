@@ -55,8 +55,4 @@ logging.getLogger("LOGGER TEST").info(
     settings.log_format,
     settings.log_level,
 )
-
-
-
-
-
+return logger
