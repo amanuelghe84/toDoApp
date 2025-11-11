@@ -40,14 +40,14 @@ logger = logging.getLogger("LOGGER TEST")
 logger.setLevel(logging.DEBUG)
 
 #console handler
-console_handler = logging.StreamHandler()
-text_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-console_handler.setFormatter(text_formatter)
+console_handler = logging.StreamHandler("/var/log/app.log")
+json_formatter = JsonFormatter()
+console_handler.setFormatter(json_formatter)
 
 # file handler
 file_handler = logging.FileHandler("/var/log/app.log")
-text_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-file_handler.setFormatter(text_formatter)
+csv_formatter = CSVFormatter()
+file_handler.setFormatter(csv_formatter)
 
 
 logger.addHandler(console_handler)
