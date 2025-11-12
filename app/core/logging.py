@@ -34,7 +34,7 @@ class CSVFormatter(logging.Formatter):
         self.output = StringIO()
         self.writer = csv.writer(self.output)
 
-
+print("test")
 
 logger = logging.getLogger("LOGGER TEST")
 logger.setLevel(logging.DEBUG)
