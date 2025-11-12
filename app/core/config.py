@@ -10,11 +10,12 @@ ENV_FILE = ROOT_DIR / ".env"
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=str(ENV_FILE),
-        env_file_encoding="utf-8",
+        env_file=str(ENV_FILE)
+        if ENV_FILE.exists()
+        else None,
         case_sensitive=False,
         extra="ignore",
-        env_ignore_empty=True,
+        env_ignore_empty=True, 
     )
 
 settings: Settings | None = None

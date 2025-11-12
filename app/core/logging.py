@@ -39,15 +39,12 @@ class CSVFormatter(logging.Formatter):
 logger = logging.getLogger("LOGGER TEST")
 logger.setLevel(logging.DEBUG)
 
-#console handler
-console_handler = logging.StreamHandler("/var/log/app.log")
-json_formatter = JsonFormatter()
-console_handler.setFormatter(json_formatter)
+console_handler = logging.StreamHandler()
+text_formatter = JsonFormatter()
+console_handler.setFormatter(text_formatter)
 
-# file handler
 file_handler = logging.FileHandler("/var/log/app.log")
-csv_formatter = CSVFormatter()
-file_handler.setFormatter(csv_formatter)
+file_handler.setFormatter(text_formatter)
 
 
 logger.addHandler(console_handler)
@@ -58,3 +55,4 @@ logging.getLogger("LOGGER TEST").info(
     settings.log_format,
     settings.log_level,
 )
+return logger
