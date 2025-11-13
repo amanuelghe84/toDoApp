@@ -7,10 +7,6 @@ from typing import Any
 
 from app.core.config import settings
 
-#logging.basicConfig(level=logging.WARNING,
-            # format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
-# Log messages at different levels
 logging.debug("Debug message")
 logging.info("Info message")
 logging.warning("Warning message")
@@ -37,21 +33,9 @@ class CSVFormatter(logging.Formatter):
 def get_logger(name: str) -> None:
     logger = logging.getLogger(name)
     logger.setLevel(settings.log_level.upper())
-    # settings.LOG_LEVEL
-    # "%(asctime)s - %(levelname)s - %(message)s"
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
-    # if settings.log.format == "json":
-    #     from pythonjsonlogger import jsonlogger
 
-    #     formatter = jsonlogger.JSONFormatter()
-    # elif settings.log.format == "csv":
-    #     formatter = logging.Formatter(
-    #         "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    #     )
-    # else:
-    #     None
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
     file_handler = logging.FileHandler(settings.log_file)
     file_handler.setLevel(settings.log_level.upper())
@@ -69,32 +53,3 @@ def get_logger(name: str) -> None:
 
     return logger
 
-    # logging.basicConfig(
-    #     filename=LOG_FILE,
-    #     level=logging.INFO,
-    #     format=JSONFormatter(),
-    #     handlers=[logging.StreamHandler()],
-    # )
-
-# print("test")
-
-# logger = logging.getLogger("LOGGER TEST")
-# logger.setLevel(logging.DEBUG)
-
-# console_handler = logging.StreamHandler()
-# text_formatter = JsonFormatter()
-# console_handler.setFormatter(text_formatter)
-
-# file_handler = logging.FileHandler("/var/log/app.log")
-# file_handler.setFormatter(text_formatter)
-
-
-# logger.addHandler(console_handler)
-# logger.addHandler(file_handler)
-
-# logging.getLogger("LOGGER TEST").info(
-#     "Logging configured successfully using %s format at %s level. ",
-#     settings.log_format,
-#     settings.log_level,
-# )
-# return logger
