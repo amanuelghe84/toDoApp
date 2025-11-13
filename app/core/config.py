@@ -22,10 +22,10 @@ class Settings(BaseSettings):
     app_version: str = Field("0.1.0", alias="APP_VERSION")
     app_description: str = Field(
         "A simple task management application", alias="APP_DESCRIPTION")
-    app_debug: str = Field("True", alias="APP_DEBUG")
+    app_debug: bool = Field(True, alias="APP_DEBUG")
     app_host: str = Field("127.0.0.1", alias="APP_HOST")
-    app_port: str = Field("8000", alias="APP_PORT")
-    app_reload: str = Field("True", alias="APP_RELOAD")
+    app_port: int = Field(8000, alias="APP_PORT")
+    app_reload: bool = Field(True, alias="APP_RELOAD")
     app_api_docs_url: str = Field("/docs", alias="APP_API_DOCS_URL")
     app_redoc_url: str = Field("/redoc", alias="APP_REDOC_URL")
     app_scalar_url: str = Field("/scalar", alias="APP_SCALARA_URL")
@@ -33,7 +33,7 @@ class Settings(BaseSettings):
 
     # Security settings
     security_secret_key: str = Field(
-        "change-me-in-production", alias="SECURITY_SECRET_KEY"
+        "secrets.token_bytes(num_bytes=32)", alias="SECURITY_SECRET_KEY"
     )
     security_jwt_algorithm: str = Field("HS256", alias="SECURITY_JWT_ALGORITHM")
     security_access_token_expire_minutes: int = Field(
@@ -77,7 +77,8 @@ class Settings(BaseSettings):
 
 
 def get_settings() -> Settings:
-    return Settings
+    return Settings()
 
 settings = get_settings()
+
 
