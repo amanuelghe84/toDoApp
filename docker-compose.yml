@@ -1,4 +1,3 @@
-version: "3.9"
 # api [python]
 services:
   api:
@@ -8,8 +7,6 @@ services:
     env_file: .env
     ports:
       - "${APP_PORT}:8000"
-    volumes:
-      - ./log:/var/log
     depends_on:
       mongo:
         condition: service_healthy
@@ -25,14 +22,14 @@ services:
 
   mongo:
     image: mongo:7
-    container_name: todo_mongodb        
-    restart: unless-stopped         
+    container_name: todo_mongodb
+    restart: unless-stopped
+    ports:
+      - "${DATABASE_PORT}:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${DATABASE_USER}"
       MONGO_INITDB_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
       MONGO_INITDB_DATABASE: "${DATABASE_NAME}"
-    ports:
-      - "${DATABASE_PORT}:27017"
     volumes:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
@@ -41,15 +38,15 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s 
+      start_period: 40s
 
   redis:
-    image: redis:7-alpine 
-    container_name: todo_redis      
+    image: redis:7-alpine
+    container_name: todo_redis
     restart: unless-stopped
     ports:
       - "${REDIS_PORT}:6379"
-    command: [redis-server, --requirepass, "${REDIS_PASSWORD}", --appendonly yes]
+    command: redis-server --requirepass "${REDIS_PASSWORD}" --appendonly yes
     volumes:
       - redis-data:/data
     healthcheck:
@@ -59,10 +56,7 @@ services:
       retries: 3
       start_period: 30s
 
-
-
 volumes:
   mongo-data:
-  redis-data:
-  app-logs:
-
+  mongo-config:
+  redis-data: 
