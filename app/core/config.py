@@ -4,6 +4,7 @@ from typing import Literal
 from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Resolve repo root (two levels up from this file: app/core/config.py -> app/ -> repo root)
 ROOT_DIR = Path(__file__).resolve().parents[2]
 ENV_FILE = ROOT_DIR / ".env"
 
@@ -12,18 +13,20 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=str(ENV_FILE)
         if ENV_FILE.exists()
-        else None,
+        else None,  # <- load .env if it exists, otherwise use env vars
         case_sensitive=False,
         extra="ignore",
-        env_ignore_empty=True,
+        env_ignore_empty=True,  # Ignore empty environment variables
     )
 
-    app_name: str = Field("ToDo App", alias="APP_NAME")
+    # Application settings
+    app_name: str = Field("Todo App", alias="APP_NAME")
     app_version: str = Field("0.1.0", alias="APP_VERSION")
     app_description: str = Field(
-        "A simple task management application", alias="APP_DESCRIPTION")
+        "A simple Todo APP FastAPI application", alias="APP_DESCRIPTION"
+    )
     app_debug: bool = Field(True, alias="APP_DEBUG")
-    app_host: str = Field("127.0.0.1", alias="APP_HOST")
+    app_host: str = Field("localhost", alias="APP_HOST")
     app_port: int = Field(8000, alias="APP_PORT")
     app_reload: bool = Field(True, alias="APP_RELOAD")
     app_api_docs_url: str = Field("/docs", alias="APP_API_DOCS_URL")
@@ -33,7 +36,7 @@ class Settings(BaseSettings):
 
     # Security settings
     security_secret_key: str = Field(
-        "secrets.token_bytes(num_bytes=32)", alias="SECURITY_SECRET_KEY"
+        "change-me-in-production", alias="SECURITY_SECRET_KEY"
     )
     security_jwt_algorithm: str = Field("HS256", alias="SECURITY_JWT_ALGORITHM")
     security_access_token_expire_minutes: int = Field(
@@ -74,11 +77,46 @@ class Settings(BaseSettings):
     log_date_format: str = Field("%Y-%m-%d %H:%M:%S", alias="LOG_DATE_FORMAT")
     log_handlers_raw: str = Field("console,file", alias="LOG_HANDLERS")
 
+    @computed_field(return_type=str)
+    def mongodb_uri(self) -> str:
+        return (
+            f"mongodb://{self.database_user}:{self.database_password}@"
+            f"{self.database_host}:{self.database_port}/{self.database_name}?authSource={self.database_auth_source}"
+        )
+
+    @computed_field(return_type=str)
+    def redis_url(self) -> str:
+        scheme = "rediss" if self.redis_ssl else "redis"
+        auth = ""
+        if self.redis_username and self.redis_password:
+            auth = f"{self.redis_username}:{self.redis_password}@"
+        elif self.redis_password and not self.redis_username:
+            auth = f":{self.redis_password}@"
+        return f"{scheme}://{auth}{self.redis_host}:{self.redis_port}/{self.redis_db}"
+
+    @computed_field(return_type=list[str])
+    def log_handlers(self) -> list[str]:
+        return [h.strip() for h in self.log_handlers_raw.split(",") if h.strip()]
+
+    @computed_field(return_type=str)
+    def config_source(self) -> str:
+        """Returns information about where configuration is loaded from"""
+        if ENV_FILE.exists():
+            return f"Loaded from .env file: {ENV_FILE}"
+        else:
+            return "Loaded from environment variables (no .env file found)"
+
+
+_settings: Settings | None = None
 
 
 def get_settings() -> Settings:
-    return Settings()
+    global _settings
+    if _settings is None:
+        _settings = Settings.model_validate(
+            {}
+        )  # validate with an empty dict to apply defaults
+    return _settings
+
 
 settings = get_settings()
-
-
