@@ -18,3 +18,4 @@ class Audit(BaseDoc):
     class Settings:
         name: ClassVar[str] = "audit"
         indexes: ClassVar[list[IndexModel]] = [IndexModel([("createdAt", ASCENDING)])]
+
