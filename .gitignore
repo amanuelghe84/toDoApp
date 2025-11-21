@@ -159,3 +159,4 @@ cython_debug/
 #  configurations that you may want to share with other developers.
 .idea/
 .vscode/
+*Zone.Identifier
