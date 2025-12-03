@@ -1,22 +1,21 @@
-from datetime import datetime
 from typing import ClassVar
 
+from beanie import Link
 from pydantic import Field
 from pymongo import ASCENDING, IndexModel
 
 from app.models.base import BaseDoc
+from app.models.enums import TaskStatus
+from app.models.project import Project
+from app.models.user import User
 
 
 class Task(BaseDoc):
-    task_id: int
-    project_id: int
-    assigned_to: str
-    description: str | None = Field(..., alias="description")
-    status: str | None =Field("assigned", "pending", "complete", alias="status")
-    created_at: datetime= Field("%Y-%m-%d %H:%M:%S", alias="createdAt")
-    updated_at: datetime = Field("%Y-%m-%d %H:%M:%S", alias="updatedAt")
-    is_active: bool = Field(False, alias="is_active")
+    description: str = Field(..., alias="description")
+    project: Link[Project] = Field(..., alias="projectId")
+    assigned_to: Link[User] | None = Field(default=None, alias="assignedTo")
+    status: TaskStatus = Field(default=TaskStatus.PENDING, alias="status")
 
     class Settings:
-        name: ClassVar[str] = "task"
+        name: ClassVar[str] = "tasks"  # collection
         indexes: ClassVar[list[IndexModel]] = [IndexModel([("createdAt", ASCENDING)])]
