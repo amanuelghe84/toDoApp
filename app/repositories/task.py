@@ -16,7 +16,7 @@ class TaskRepository:
     async def get(self, id: PydanticObjectId | str) -> Task | None:
         return await Task.get(id)
 
-    async def list(self, *, skip: int = 0, limit: int = 100) -> list[Project]:
+    async def list(self, *, skip: int = 0, limit: int = 100) -> list[ Task]:
         items: list[Task] = await Task.find_all().skip(skip).limit(limit).to_list()
         return items
 
