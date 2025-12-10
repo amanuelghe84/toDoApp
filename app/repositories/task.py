@@ -7,8 +7,6 @@ from app.models.task import Task
 
 
 class TaskRepository:
-    """Repository for Task documents."""
-
     async def create(self, task: Task) -> Task:
         await task.insert()
         return task

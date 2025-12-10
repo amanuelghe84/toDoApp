@@ -7,8 +7,6 @@ from app.models.project import Project
 
 
 class ProjectRepository:
-    """Repository for Project documents."""
-
     async def create(self, project: Project) -> Project:
         await project.insert()
         return project

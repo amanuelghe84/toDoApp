@@ -7,8 +7,6 @@ from app.models.audit import Audit
 
 
 class AuditRepository:
-    """Repository for Audit documents."""
-
     async def create(self, audit: Audit) -> Audit:
         await audit.insert()
         return audit
