@@ -1,12 +1,12 @@
-from collection.abc import AsyncIterator
-from contexlib import asynccontextmanager
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
 
 from app.core.config import settings
 from app.core.logging import get_logger
-from app.core.mongo import beanie_lifespan
+from app.core.mongodb import beanie_lifespan
 from app.core.redis import redis_lifespan
 
 # Log configuration source on startup
