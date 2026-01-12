@@ -152,75 +152,75 @@ API GROUPS:
 - SCHEMAS [RESPONSE AND REQUEST]
   
   - USER [/user]
-     - POST REQUEST [/user]: [ UserPostRequest ] 
+     - POST REQUEST [/user]: [UserPostRequest] 
        - username
        - email 
        - password
        - role
-     - POST RESPONSE [/user]: [ UserPostResponse ] 
+     - POST RESPONSE [/user]: [UserPostResponse] 
        -  message
        -  status
        -  success
-     - GET REQUEST [/user/<id>]: [ UserGetRequest ]
+     - GET REQUEST [/user/<id>]: [UserGetRequest]
        -  id
        -  username
        -  email
        -  password
        -  role
-     - GET RESPONSE [/user]: [ UserGetResponse ]
+     - GET RESPONSE [/user]: [UserGetResponse]
        -  message
        -  status
        -  success
-     - PUT REQUEST [/user/<id>]: [  UserUpdateRequest]
+     - PUT REQUEST [/user/<id>]: [UserUpdateRequest]
        -  id
        -  username
        -  email
        -  password
        -  role
-     - PUT RESPONSE [/user]: [ UserUpdateResponse]
+     - PUT RESPONSE [/user]: [UserUpdateResponse]
        -  message
        -  status
        -  success
-     - DELETE REQUEST [/user/<id>]: [ UserDeleteRequest]
+     - DELETE REQUEST [/user/<id>]: [UserDeleteRequest]
        -  id
        -  username
        -  email
        -  password
        -  role
   - TASK [/task]
-     - POST REQUEST [/task]: [ TaskPostRequest ]
+     - POST REQUEST [/task]: [TaskPostRequest]
        -  task_name
        -  username
        -  email
        -  password
        -  role
-     - POST RESPONSE [/task]: [ TaskPostResponse ]
+     - POST RESPONSE [/task]: [TaskPostResponse]
        -  message
        -  status
        -  success 
-     - GET REQUEST [/task/<task_id>]: [ TaskGetRequest]
+     - GET REQUEST [/task/<task_id>]: [TaskGetRequest]
        -  task_id
        -  user_id
        -  username
        -  email
        -  password
        -  role
-     - GET RESPONSE [/task/<task_id>]: [ TaskGetResponse]
+     - GET RESPONSE [/task/<task_id>]: [TaskGetResponse]
        -  message
        -  status
        -  success
-     - PUT REQUEST [/task/<task_id>]: [ TaskUpdateRequest]
+     - PUT REQUEST [/task/<task_id>]: [TaskUpdateRequest]
        -  task_id
        -  user_id
        -  username
        -  email
        -  password
        -  role
-     - PUT RESPONSE [/task]: [ TaskUpdateResponse]
+     - PUT RESPONSE [/task]: [TaskUpdateResponse]
        -  message
        -  status
        -  success
-     - DELETE REQUEST [/task/<task_id>]: [ TaskDeleteRequest]
+     - DELETE REQUEST [/task/<task_id>]: [TaskDeleteRequest]
        -  task_id
        -  user_id
        -  username
@@ -228,39 +228,39 @@ API GROUPS:
        -  password
        -  role
   - PROJECT [/project]
-     - POST REQUEST [/project]: [ ProjectPostRequest]
+     - POST REQUEST [/project]: [ProjectPostRequest]
        -  project_name
        -  username
        -  email
        -  password
        -  role
-     - POST RESPONSE [/project]: [ ProjectPostResponse]
+     - POST RESPONSE [/project]: [ProjectPostResponse]
        -  message
        -  status
        -  success
-     - GET REQUEST [/project/<project_id>]: [ ProjectGetRequest]
+     - GET REQUEST [/project/<project_id>]: [ProjectGetRequest]
        -  project_id
        -  user_id
        -  username
        -  email
        -  password
        -  role
-     - GET RESPONSE [/project]: [ ProjectGetResponse]
+     - GET RESPONSE [/project]: [ProjectGetResponse]
        -  message
        -  status
        -  success
-     - PUT REQUEST [/project/<project_id>]: [ ProjectUpdateRequest]
+     - PUT REQUEST [/project/<project_id>]: [ProjectUpdateRequest]
        -  project_id
        -  user_id
        -  username
        -  email
        -  password
        -  role
-     - PUT RESPONSE [/project]: [ ProjectUpdateResponse]
+     - PUT RESPONSE [/project]: [ProjectUpdateResponse]
        -  message
        -  status
        -  success
-     - DELETE REQUEST [/project/<project_id>]: [ ProjectDeleteRequest]
+     - DELETE REQUEST [/project/<project_id>]: [ProjectDeleteRequest]
        -  project_id
        -  user_id
        -  username
