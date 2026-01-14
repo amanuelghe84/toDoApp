@@ -6,7 +6,7 @@ from app.models.enums import Role
 from app.schemas.common import ResponseEnvelope
 
 
-class TaskPostRequest(BaseModel):
+class UserPostRequest(BaseModel):
     """Schema for creating a task via POST /tasks.
 
     Fields:
@@ -26,7 +26,7 @@ class TaskPostRequest(BaseModel):
     roles: list[Role] | None = Field(default=None)
 
 
-class TaskRead(BaseModel):
+class UserRead(BaseModel):
     """Shape of a user returned by the API (no password)."""
 
     id: str = Field(serialization_alias="id")
@@ -35,5 +35,5 @@ class TaskRead(BaseModel):
     roles: list[Role]
 
 
-class TaskPostResponse(ResponseEnvelope[TaskRead]):
-    """Envelope wrapping the created task."""
+class UserPostResponse(ResponseEnvelope[UserRead]):
+    """Envelope wrapping the created user."""
